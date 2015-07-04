@@ -10,32 +10,112 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.abhi8569.musicplayer.PlayingNow">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="We Will Rock You"
+        android:maxLines="1"
+        android:textColor="#ffffff"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="1dip"
+        android:layout_centerHorizontal="true"
+        android:textSize="30sp"
+        android:id="@+id/songName"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Queen | Champion"
+        android:maxLines="1"
+        android:textSize="15sp"
+        android:layout_alignBottom="@+id/songName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-20dip"
+        android:textColor="#ffffff"
+        android:id="@+id/artistAlbumName" />
+
+    <ImageButton
+        android:id="@+id/shuffleTrackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dip"
+        android:layout_marginTop="70dip"
+        android:background="@color/accent_material_light"
+        android:src="@drawable/ic_action_shuffle" />
+
+    <ImageButton
+        android:id="@+id/repeatTrackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dip"
+        android:layout_marginTop="70dip"
+        android:background="@color/accent_material_light"
+        android:src="@drawable/ic_action_repeat_all" />
 
     <com.pkmmte.view.CircularImageView
         android:id="@+id/albumArtNowPlaying"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:src="@drawable/search"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/search"
         app:border="true"
         app:border_color="@color/accent_material_light"
         app:border_width="4dp" />
 
     <com.abhi8569.musicplayer.CircularSeekBar
         android:id="@+id/cBar"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:layout_width="340dip"
         android:layout_height="340dip"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_gravity="center"
         app:circle_color="#ffffff"
-        app:pointer_color="#ffffff"
         app:circle_progress_color="#000000"
+        app:circle_y_radius="150"
         app:end_angle="20"
-        app:start_angle="160"
-        app:circle_y_radius="150"/>
+        app:pointer_color="#ffffff"
+        app:start_angle="160" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/albumArtNowPlaying"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-70dip">
+
+        <ImageButton
+            android:id="@+id/previousTrackButton"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@color/accent_material_light"
+            android:src="@drawable/ic_action_previous" />
+
+
+        <ImageButton
+            android:id="@+id/playButton"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@color/accent_material_light"
+            android:src="@drawable/ic_action_floating_play" />
+
+        <ImageButton
+            android:id="@+id/nextTrackButton"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@color/accent_material_light"
+            android:src="@drawable/ic_action_next" />
+    </LinearLayout>
+
 
 
 </RelativeLayout>
