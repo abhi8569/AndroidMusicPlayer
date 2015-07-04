@@ -1,0 +1,26 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <!--<style name="LibraryTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">-->
+
+        <!--<item name="colorPrimary">@color/accent_material_light</item>-->
+       <!-- -->
+    <!--</style>-->
+
+    <style name="Theme.MyApp.ActionBar" parent="style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <!-- remove shadow below action bar -->
+        <!-- <item name="android:elevation">0dp</item> -->
+        <!-- Support library compatibility -->
+
+        <item name="elevation">0dp</item>
+    </style>
+    <style name="Theme.MyApp" parent="Theme.AppCompat.Light">
+        <item name="actionBarStyle">@style/Theme.MyApp.ActionBar</item>
+        <item name="colorPrimary">@color/accent_material_light</item>
+        <item name="android:textColorPrimary">#ffffff</item>
+    </style>
+</resources>

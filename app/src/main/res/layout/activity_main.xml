@@ -1,0 +1,52 @@
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/DrawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="7dp">
+
+    <!-- The main content view -->
+    <FrameLayout
+        android:id="@+id/content_frame"
+        xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff">
+
+        <include
+            android:id="@+id/tool_bar"
+            layout="@layout/mytoolbar" />
+
+        <ImageButton
+            android:id="@+id/playingnow_button"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="right|bottom"
+            android:elevation="1dp"
+            android:paddingLeft="3dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:stateListAnimator="@animator/floating_animator"
+            android:tint="#ffffff"
+            android:background="@drawable/circular_image"
+            android:src="@drawable/ic_action_floating_play"
+            android:adjustViewBounds="true"
+            tools:ignore="ContentDescription" />
+
+    </FrameLayout>
+
+    <!-- The navigation drawer -->
+    <ListView
+        android:id="@+id/left_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start|bottom"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:background="@color/accent_material_light"
+        android:choiceMode="singleChoice"
+        android:elevation="10dp"
+        />
+
+
+</android.support.v4.widget.DrawerLayout>
+

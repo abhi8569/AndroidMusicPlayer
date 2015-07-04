@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/accent_material_light"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.abhi8569.musicplayer.PlayingNow">
+
+
+
+    <com.pkmmte.view.CircularImageView
+        android:id="@+id/albumArtNowPlaying"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/search"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        app:border="true"
+        app:border_color="@color/accent_material_light"
+        app:border_width="4dp" />
+
+    <com.abhi8569.musicplayer.CircularSeekBar
+        android:id="@+id/cBar"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="340dip"
+        android:layout_height="340dip"
+        android:layout_gravity="center"
+        app:circle_color="#ffffff"
+        app:pointer_color="#ffffff"
+        app:circle_progress_color="#000000"
+        app:end_angle="20"
+        app:start_angle="160"
+        app:circle_y_radius="150"/>
+
+
+</RelativeLayout>
