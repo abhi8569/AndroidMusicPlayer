@@ -60,7 +60,7 @@
         android:layout_height="300dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/search"
+        android:src="@drawable/nowplaying_bg"
         app:border="true"
         app:border_color="@color/accent_material_light"
         app:border_width="4dp" />

@@ -2,6 +2,8 @@ package com.abhi8569.musicplayer;
 
 import java.util.Locale;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import static android.support.v7.app.ActionBar.NAVIGATION_MODE_TABS;
@@ -39,10 +43,17 @@ public class Library extends ActionBarActivity {
      */
     ViewPager mViewPager;
     private Toolbar toolbar;
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(this.getResources().getColor(R.color.accent_material_light));
+
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.

@@ -1,5 +1,6 @@
 package com.abhi8569.musicplayer;
 
+import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -11,12 +12,15 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -24,13 +28,19 @@ import android.widget.LinearLayout;
 public class PlayingNow extends ActionBarActivity {
 
     ImageView albumArtNowPlaying;
-    int albumartID = R.drawable.search;
+    int albumartID = R.drawable.queen;
     CircularSeekBar c;
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playing_now);
         c = (CircularSeekBar) findViewById(R.id.cBar);
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(this.getResources().getColor(R.color.accent_material_light));
 
         albumArtNowPlaying = (ImageView) findViewById(R.id.albumArtNowPlaying);
         albumArtNowPlaying.setImageBitmap(getRefelection(BitmapFactory.decodeResource(getResources(), albumartID)));
