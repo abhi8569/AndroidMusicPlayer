@@ -14,4 +14,5 @@
     <string name="title_activity_artist">Artist</string>
     <string name="title_activity_songs">Songs</string>
     <string name="title_activity_playing_now">PlayingNow</string>
+    <string name="title_activity_library_demo">LibraryDemo</string>
 </resources>

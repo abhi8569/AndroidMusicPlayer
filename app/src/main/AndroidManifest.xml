@@ -17,15 +17,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Library"
-            android:label="@string/title_activity_library"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.MyApp" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.abhi8569.musicplayer.MainActivity" />
-        </activity>
-        <activity
             android:name=".Album"
             android:label="@string/title_activity_album"
             android:parentActivityName=".MainActivity" >
@@ -34,26 +25,18 @@
                 android:value="com.abhi8569.musicplayer.MainActivity" />
         </activity>
         <activity
-            android:name=".Artist"
-            android:label="@string/title_activity_artist"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.abhi8569.musicplayer.MainActivity" />
-        </activity>
-        <activity
-            android:name=".Songs"
-            android:label="@string/title_activity_songs"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.abhi8569.musicplayer.MainActivity" />
-        </activity>
-        <activity
             android:name=".PlayingNow"
             android:label="@string/title_activity_playing_now"
-            android:theme="@style/Theme.MyApp">
+            android:theme="@style/Theme.MyApp" >
+        </activity>
+        <activity
+            android:name=".LibraryDemo"
+            android:label="@string/title_activity_library_demo"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.abhi8569.musicplayer.MainActivity" />
         </activity>
     </application>
-
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 </manifest>

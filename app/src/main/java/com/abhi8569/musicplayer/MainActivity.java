@@ -4,7 +4,9 @@ package com.abhi8569.musicplayer;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.graphics.drawable.GradientDrawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -25,6 +27,8 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 
+
+    public static Cursor musicCursor;
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -37,6 +41,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        new MainActivityBackgroundTask().execute();
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -65,7 +71,7 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(MainActivity.this, "POsition is " + Integer.toString(position), Toast.LENGTH_LONG).show();
                 if (position == 1) {
-                    Intent libIntent = new Intent(MainActivity.this, Library.class);
+                    Intent libIntent = new Intent(MainActivity.this, LibraryDemo.class);
                     startActivity(libIntent);
                 }
             }
@@ -100,7 +106,35 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(playNowIntent);
             }
         });
+    }
 
+    public static Cursor getMusicCursorFromMainActivity()
+    {
+        return musicCursor;
+    }
+
+    class MainActivityBackgroundTask extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            musicCursor=SongManager.populateQueries(MainActivity.this);
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
 
     }
 
