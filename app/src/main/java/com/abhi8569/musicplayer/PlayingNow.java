@@ -37,10 +37,10 @@ public class PlayingNow extends ActionBarActivity {
         setContentView(R.layout.activity_playing_now);
         c = (CircularSeekBar) findViewById(R.id.cBar);
 
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.accent_material_light));
+//        Window window = this.getWindow();
+//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        window.setStatusBarColor(this.getResources().getColor(R.color.accent_material_light));
 
         albumArtNowPlaying = (ImageView) findViewById(R.id.albumArtNowPlaying);
         albumArtNowPlaying.setImageBitmap(getRefelection(BitmapFactory.decodeResource(getResources(), albumartID)));

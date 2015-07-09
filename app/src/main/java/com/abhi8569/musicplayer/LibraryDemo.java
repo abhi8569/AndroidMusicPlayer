@@ -28,10 +28,10 @@ public class LibraryDemo extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library_demo);
 
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.accent_material_light));
+//        Window window = this.getWindow();
+//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        window.setStatusBarColor(this.getResources().getColor(R.color.accent_material_light));
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar_library_demo);
         setSupportActionBar(toolbar);

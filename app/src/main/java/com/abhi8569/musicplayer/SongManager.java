@@ -54,10 +54,15 @@ public class SongManager {
             Uri albumArtUri = ContentUris.withAppendedId(ART_CONTENT_URI, albumID);
 
             Bitmap bitmap = null;
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), albumArtUri);
             } catch (Exception exception) {
-                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.speaker_icon);
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.speaker,options);
+                options.inSampleSize = calculateInSampleSize(options, 100,100);
+                options.inJustDecodeBounds = false;
+                bitmap= BitmapFactory.decodeResource(context.getResources(), R.drawable.speaker,options);
             }
             albumArtList.add(new AlbumArt(bitmap, albumID));
         }
@@ -67,6 +72,29 @@ public class SongManager {
         return cursor;
     }
 
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
     public static Bitmap getAlbumArt(Context context,long _albumID)
     {
         for(AlbumArt a: albumArtList)
@@ -74,6 +102,6 @@ public class SongManager {
             if(a.getAlbumID()==_albumID)
                 return a.getImage();
         }
-        return BitmapFactory.decodeResource(context.getResources(),R.drawable.speaker_icon);
+        return BitmapFactory.decodeResource(context.getResources(),R.drawable.speaker);
     }
 }
