@@ -10,5 +10,7 @@
         android:id="@+id/songs_tab_listView"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:dividerHeight="2dip"
+        android:drawSelectorOnTop="true"
         android:background="@color/accent_material_light"/>
 </RelativeLayout>
