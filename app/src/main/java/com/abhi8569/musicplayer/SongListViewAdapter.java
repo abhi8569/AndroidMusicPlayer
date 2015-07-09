@@ -14,13 +14,14 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import static android.graphics.BitmapFactory.*;
 
 /**
  * Created by abishek on 06-07-2015.
  */
 public class SongListViewAdapter extends CursorAdapter {
-    int albumartID = R.drawable.queen;
 
     public SongListViewAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0);
@@ -42,21 +43,21 @@ public class SongListViewAdapter extends CursorAdapter {
         ImageView songImage = (ImageView) view.findViewById(R.id.song_listview_imageView);
         // Extract properties from cursor
         String title = cursor.getString(1);
-        long albumID = cursor.getInt(0);
-
-        final Uri ART_CONTENT_URI = Uri.parse("content://media/external/audio/albumart");
-        Uri albumArtUri = ContentUris.withAppendedId(ART_CONTENT_URI, albumID);
-
-        Bitmap bitmap = null;
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), albumArtUri);
-        } catch (Exception exception) {
-            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.search);
-        }
+//        long albumID = cursor.getInt(0);
+//
+//        final Uri ART_CONTENT_URI = Uri.parse("content://media/external/audio/albumart");
+//        Uri albumArtUri = ContentUris.withAppendedId(ART_CONTENT_URI, albumID);
+//
+//        Bitmap bitmap = null;
+//        try {
+//            bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), albumArtUri);
+//        } catch (Exception exception) {
+//            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.search);
+//        }
 
 
         // Populate fields with extracted properties
         textView.setText(title);
-        songImage.setImageBitmap(bitmap);
+        songImage.setImageBitmap(SongManager.getAlbumArt(context,cursor.getInt(0)));
     }
 }
