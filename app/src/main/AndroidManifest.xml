@@ -27,8 +27,7 @@
         </activity>
         <activity
             android:name=".PlayingNow"
-            android:label="@string/title_activity_playing_now"
-            android:theme="@style/Theme.MyApp" >
+            android:label="@string/title_activity_playing_now" >
         </activity>
         <activity
             android:name=".LibraryDemo"

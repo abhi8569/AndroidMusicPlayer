@@ -64,7 +64,6 @@ public class MainActivity extends ActionBarActivity {
         mDrawerList.setDividerHeight(3);
         NavigationDrawerAdapter adapter = new NavigationDrawerAdapter(this, navigationDrawerMenu, imgIF);
         mDrawerList.setAdapter(adapter);
-        //todo: Add adapter for listView
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
