@@ -146,7 +146,8 @@
     <!-- The navigation drawer -->
     <ListView
         android:id="@+id/playnow_queuelist"
-        android:layout_width="240dp"
+        android:layout_width="280dp"
+        android:dividerHeight="2dip"
         android:layout_height="match_parent"
         android:layout_gravity="right|top"
         android:layout_marginTop="?android:attr/actionBarSize"

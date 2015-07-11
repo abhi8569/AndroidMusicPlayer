@@ -7,7 +7,8 @@
 
     <ImageView
         android:layout_width="?android:attr/listPreferredItemHeight"
-        android:layout_height="match_parent"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_marginLeft="5dip"
         android:layout_gravity="center_vertical"
         android:id="@+id/song_listview_imageView" />
 

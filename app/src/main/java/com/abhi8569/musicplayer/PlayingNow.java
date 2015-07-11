@@ -2,6 +2,7 @@ package com.abhi8569.musicplayer;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -33,6 +34,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 
 public class PlayingNow extends ActionBarActivity {
 
@@ -43,6 +47,8 @@ public class PlayingNow extends ActionBarActivity {
     private ListView mDrawerList;
     int albumartID = R.drawable.queen;
     CircularSeekBar c;
+    ArrayList<SongInformation> receivedList;
+    NowPlayingQueueAdapter queueAdapt=null;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -50,7 +56,7 @@ public class PlayingNow extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playing_now);
         c = (CircularSeekBar) findViewById(R.id.cBar);
-
+        receivedList=new ArrayList<SongInformation>();
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         albumArtNowPlaying = (ImageView) findViewById(R.id.albumArtNowPlaying);
@@ -59,6 +65,14 @@ public class PlayingNow extends ActionBarActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.DrawerLayout_PlayNow);
         mDrawerList = (ListView) findViewById(R.id.playnow_queuelist);
         //todo: Add adapter for listView
+
+        Resources res =getResources();
+        if(getIntent().getExtras()!=null) {
+            Bundle receivedData = getIntent().getExtras();
+            receivedList = receivedData.getParcelableArrayList("data");
+            queueAdapt = new NowPlayingQueueAdapter(this, receivedList, res);
+            mDrawerList.setAdapter(queueAdapt);
+        }
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
