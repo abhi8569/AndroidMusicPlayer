@@ -51,17 +51,13 @@ public class PlayingNow extends ActionBarActivity {
         setContentView(R.layout.activity_playing_now);
         c = (CircularSeekBar) findViewById(R.id.cBar);
 
-//        Window window = this.getWindow();
-//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        window.setStatusBarColor(this.getResources().getColor(R.color.accent_material_light));
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         albumArtNowPlaying = (ImageView) findViewById(R.id.albumArtNowPlaying);
         albumArtNowPlaying.setImageBitmap(getRefelection(BitmapFactory.decodeResource(getResources(), albumartID)));
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.DrawerLayout_PlayNow);
-        mDrawerList=(ListView)findViewById(R.id.playnow_queuelist);
+        mDrawerList = (ListView) findViewById(R.id.playnow_queuelist);
         //todo: Add adapter for listView
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,25 +69,6 @@ public class PlayingNow extends ActionBarActivity {
                 }
             }
         });
-
-//        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
-//                R.string.open_drawer, R.string.closed_drawer) {
-//
-//            /** Called when a drawer has settled in a completely open state. */
-//            public void onDrawerOpened(View drawerView) {
-//                super.onDrawerOpened(drawerView);
-//                getSupportActionBar().setTitle("Playlist Queue");
-//                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-//            }
-//
-//            /** Called when a drawer has settled in a completely closed state. */
-//            public void onDrawerClosed(View view) {
-//                super.onDrawerClosed(view);
-//                getSupportActionBar().setTitle(getTitle().toString());
-//                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-//            }
-//        };
-//        mDrawerLayout.setDrawerListener(mDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
@@ -165,7 +142,7 @@ public class PlayingNow extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.queue_drawer_opener) {
-            if(mDrawerLayout.isDrawerOpen(Gravity.END))
+            if (mDrawerLayout.isDrawerOpen(Gravity.END))
                 mDrawerLayout.closeDrawer(Gravity.START);
             else
                 mDrawerLayout.openDrawer(Gravity.END);

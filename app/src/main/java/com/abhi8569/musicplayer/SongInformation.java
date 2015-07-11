@@ -7,13 +7,15 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.io.InputStream;
 
 /**
  * Created by abishek on 06-07-2015.
  */
-public class SongInformation {
+public class SongInformation implements Parcelable {
 
     private int albumID;
     private String queryTitle;
@@ -92,4 +94,40 @@ public class SongInformation {
     public void setQueryTtile(String queryTitle) {
         this.queryTitle = queryTitle;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.albumID);
+        dest.writeString(this.queryTitle);
+        dest.writeString(this.queryAlbum);
+        dest.writeString(this.queryArtist);
+        dest.writeInt(this.queryDuration);
+        dest.writeString(this.filepath);
+        dest.writeString(this._id);
+    }
+
+    protected SongInformation(Parcel in) {
+        this.albumID = in.readInt();
+        this.queryTitle = in.readString();
+        this.queryAlbum = in.readString();
+        this.queryArtist = in.readString();
+        this.queryDuration = in.readInt();
+        this.filepath = in.readString();
+        this._id = in.readString();
+    }
+
+    public static final Parcelable.Creator<SongInformation> CREATOR = new Parcelable.Creator<SongInformation>() {
+        public SongInformation createFromParcel(Parcel source) {
+            return new SongInformation(source);
+        }
+
+        public SongInformation[] newArray(int size) {
+            return new SongInformation[size];
+        }
+    };
 }

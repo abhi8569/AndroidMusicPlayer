@@ -12,5 +12,6 @@
         android:layout_centerHorizontal="true"
         android:dividerHeight="2dip"
         android:drawSelectorOnTop="true"
+        android:focusable="false"
         android:background="@color/accent_material_light"/>
 </RelativeLayout>
