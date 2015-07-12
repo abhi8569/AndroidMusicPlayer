@@ -63,6 +63,7 @@ public class BackgroundMusicServices extends Service implements MediaPlayer.OnPr
 
     public void playSong(){
         player.reset();
+        PlayingNow pn=new PlayingNow();
         //get song
         SongInformation playSong = songs.get(songPosn);
         //get id
@@ -71,13 +72,27 @@ public class BackgroundMusicServices extends Service implements MediaPlayer.OnPr
         Uri trackUri = ContentUris.withAppendedId(
                 android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 currSong);
-        try{
+        try {
             player.setDataSource(getApplicationContext(), trackUri);
+            pn.setImageBackground(playSong.getAlbumID());
         }
         catch(Exception e){
             Log.e("MUSIC SERVICE", "Error setting data source", e);
         }
         player.prepareAsync();
+    }
+
+    public void playPrev(){
+        songPosn--;
+        if(songPosn<0) songPosn=songs.size()-1;
+        playSong();
+    }
+
+    //skip to next
+    public void playNext(){
+        songPosn++;
+        if(songPosn>=songs.size()) songPosn=0;
+        playSong();
     }
 
     @Override

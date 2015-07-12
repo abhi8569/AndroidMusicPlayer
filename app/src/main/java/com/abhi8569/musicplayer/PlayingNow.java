@@ -2,6 +2,7 @@ package com.abhi8569.musicplayer;
 
 import android.annotation.TargetApi;
 import android.content.ComponentName;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -18,8 +19,11 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
+import android.provider.MediaStore;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -33,6 +37,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -49,10 +54,13 @@ public class PlayingNow extends ActionBarActivity {
     private Toolbar toolbar;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
-    int albumartID = R.drawable.queen;
+    int albumartID = R.drawable.speaker;
     CircularSeekBar c;
     ArrayList<SongInformation> receivedList;
     NowPlayingQueueAdapter queueAdapt=null;
+
+    //Music Control
+    ImageButton nextTrack,previousTrack;
 
     //Services Init
     private BackgroundMusicServices musicSrv;
@@ -95,15 +103,35 @@ public class PlayingNow extends ActionBarActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        //Music Control
+        nextTrack=(ImageButton)findViewById(R.id.nextTrackButton);
+        nextTrack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                musicSrv.playNext();
+            }
+        });
+        previousTrack=(ImageButton)findViewById(R.id.previousTrackButton);
+        previousTrack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                musicSrv.playPrev();
+            }
+        });
     }
-    
+
+    public void setImageBackground(int _albumID)
+    {
+        albumArtNowPlaying.setImageBitmap(getRefelection(SongManager.getAlbumArt(PlayingNow.this,_albumID)));
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
         if(playIntent==null){
             playIntent = new Intent(this, BackgroundMusicServices.class);
             bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
-
             startService(playIntent);
         }
     }
@@ -126,6 +154,8 @@ public class PlayingNow extends ActionBarActivity {
             //pass list
             musicSrv.setIncommingData(receivedList,songPosition);
             musicBound = true;
+            musicSrv.setSong(songPosition);
+            musicSrv.playSong();
         }
 
         @Override

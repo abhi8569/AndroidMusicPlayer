@@ -46,7 +46,7 @@ public class SongsTab extends Fragment implements AdapterView.OnItemClickListene
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         int pos = position;
         cu.moveToFirst();
-        while (cu.moveToNext()) {
+        for(cu.moveToFirst(); !cu.isAfterLast(); cu.moveToNext()){
             sendSongsArrayToPlayNow.add(new SongInformation(cu));
         }
         Intent i = new Intent(getActivity(), PlayingNow.class);
