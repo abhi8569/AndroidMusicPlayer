@@ -1,7 +1,10 @@
 package com.abhi8569.musicplayer;
 
 import android.annotation.TargetApi;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +19,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
+import android.os.IBinder;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -50,6 +54,12 @@ public class PlayingNow extends ActionBarActivity {
     ArrayList<SongInformation> receivedList;
     NowPlayingQueueAdapter queueAdapt=null;
 
+    //Services Init
+    private BackgroundMusicServices musicSrv;
+    private Intent playIntent;
+    private boolean musicBound=false;
+    int songPosition=0;
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +79,7 @@ public class PlayingNow extends ActionBarActivity {
         Resources res =getResources();
         if(getIntent().getExtras()!=null) {
             Bundle receivedData = getIntent().getExtras();
+            songPosition=receivedData.getInt("position");
             receivedList = receivedData.getParcelableArrayList("data");
             queueAdapt = new NowPlayingQueueAdapter(this, receivedList, res);
             mDrawerList.setAdapter(queueAdapt);
@@ -78,14 +89,50 @@ public class PlayingNow extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(PlayingNow.this, "POsition is " + Integer.toString(position), Toast.LENGTH_LONG).show();
-                if (position == 1) {
-
-                }
+                musicSrv.setSong(position);
+                musicSrv.playSong();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(playIntent==null){
+            playIntent = new Intent(this, BackgroundMusicServices.class);
+            bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
+
+            startService(playIntent);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(playIntent);
+        musicSrv=null;
+        super.onDestroy();
+    }
+
+    //connect to the service
+    private ServiceConnection musicConnection = new ServiceConnection(){
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            BackgroundMusicServices.MusicBinder binder = (BackgroundMusicServices.MusicBinder)service;
+            //get service
+            musicSrv = binder.getService();
+            //pass list
+            musicSrv.setIncommingData(receivedList,songPosition);
+            musicBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            musicBound = false;
+        }
+    };
 
     public Bitmap getRefelection(Bitmap image) {
         // The gap we want between the reflection and the original image
