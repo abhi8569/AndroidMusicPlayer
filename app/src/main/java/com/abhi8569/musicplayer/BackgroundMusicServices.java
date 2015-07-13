@@ -25,6 +25,7 @@ public class BackgroundMusicServices extends Service implements MediaPlayer.OnPr
     //current position
     private int songPosn;
     private final IBinder musicBind = new MusicBinder();
+    SongInformation playSong;
 
     public void onCreate() {
         //create the service
@@ -61,11 +62,32 @@ public class BackgroundMusicServices extends Service implements MediaPlayer.OnPr
         player.setOnErrorListener(this);
     }
 
+    public int getCurrentSongPosition()
+    {
+        return songPosn;
+    }
+
+    public String getTitle()
+    {
+        return playSong.getQueryTitle();
+    }
+    public String getArtist()
+    {
+        return playSong.getQueryArtist();
+    }
+    public String getAlbum()
+    {
+        return playSong.getQueryAlbum();
+    }
+    public int getAlbumID()
+    {
+        return playSong.getAlbumID();
+    }
+
     public void playSong(){
         player.reset();
-        PlayingNow pn=new PlayingNow();
         //get song
-        SongInformation playSong = songs.get(songPosn);
+        playSong = songs.get(songPosn);
         //get id
         long currSong = Long.parseLong(playSong.get_id());
         //set uri
@@ -74,7 +96,6 @@ public class BackgroundMusicServices extends Service implements MediaPlayer.OnPr
                 currSong);
         try {
             player.setDataSource(getApplicationContext(), trackUri);
-            pn.setImageBackground(playSong.getAlbumID());
         }
         catch(Exception e){
             Log.e("MUSIC SERVICE", "Error setting data source", e);

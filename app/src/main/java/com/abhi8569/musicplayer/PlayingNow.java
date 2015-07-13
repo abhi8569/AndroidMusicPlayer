@@ -1,10 +1,12 @@
 package com.abhi8569.musicplayer;
 
 import android.annotation.TargetApi;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -41,14 +43,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import android.os.Handler;
 
 
 public class PlayingNow extends ActionBarActivity {
 
+    Handler handler=new Handler();
     ImageView albumArtNowPlaying;
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
@@ -57,24 +62,26 @@ public class PlayingNow extends ActionBarActivity {
     int albumartID = R.drawable.speaker;
     CircularSeekBar c;
     ArrayList<SongInformation> receivedList;
-    NowPlayingQueueAdapter queueAdapt=null;
+    NowPlayingQueueAdapter queueAdapt = null;
 
     //Music Control
-    ImageButton nextTrack,previousTrack;
+    ImageButton nextTrack, previousTrack, playButton;
+    TextView titleView, albumArtView;
 
     //Services Init
     private BackgroundMusicServices musicSrv;
     private Intent playIntent;
-    private boolean musicBound=false;
-    int songPosition=0;
+    private boolean musicBound = false;
+    int songPosition = 0;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playing_now);
-        c = (CircularSeekBar) findViewById(R.id.cBar);
-        receivedList=new ArrayList<SongInformation>();
+        titleView = (TextView) findViewById(R.id.songName);
+        albumArtView = (TextView) findViewById(R.id.artistAlbumName);
+        receivedList = new ArrayList<SongInformation>();
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         albumArtNowPlaying = (ImageView) findViewById(R.id.albumArtNowPlaying);
@@ -84,10 +91,10 @@ public class PlayingNow extends ActionBarActivity {
         mDrawerList = (ListView) findViewById(R.id.playnow_queuelist);
         //todo: Add adapter for listView
 
-        Resources res =getResources();
-        if(getIntent().getExtras()!=null) {
+        Resources res = getResources();
+        if (getIntent().getExtras() != null) {
             Bundle receivedData = getIntent().getExtras();
-            songPosition=receivedData.getInt("position");
+            songPosition = receivedData.getInt("position");
             receivedList = receivedData.getParcelableArrayList("data");
             queueAdapt = new NowPlayingQueueAdapter(this, receivedList, res);
             mDrawerList.setAdapter(queueAdapt);
@@ -103,33 +110,76 @@ public class PlayingNow extends ActionBarActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
         //Music Control
-        nextTrack=(ImageButton)findViewById(R.id.nextTrackButton);
+        playButton = (ImageButton) findViewById(R.id.playButton);
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        nextTrack = (ImageButton) findViewById(R.id.nextTrackButton);
         nextTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 musicSrv.playNext();
             }
         });
-        previousTrack=(ImageButton)findViewById(R.id.previousTrackButton);
+        previousTrack = (ImageButton) findViewById(R.id.previousTrackButton);
         previousTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 musicSrv.playPrev();
             }
         });
+        c = (CircularSeekBar) findViewById(R.id.cBar);
+        c.setOnSeekBarChangeListener(new CircularSeekBar.OnCircularSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(CircularSeekBar circularSeekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+        });
+
     }
 
-    public void setImageBackground(int _albumID)
-    {
-        albumArtNowPlaying.setImageBitmap(getRefelection(SongManager.getAlbumArt(PlayingNow.this,_albumID)));
+    Runnable updateTextRunnable = new Runnable() {
+        public void run() {
+            try {
+                titleView.setText(musicSrv.getTitle());
+                albumArtView.setText(musicSrv.getArtist() + " | "+musicSrv.getAlbum());
+                setImageBackground(musicSrv.getAlbumID());
+            }
+            catch (Exception e)
+            {
+                Log.e("Music PLayer",e.getMessage());
+            }
+            handler.postDelayed(this, 500);
+        }
+    };
+
+    public void setSongInformation(String _title, String _artist, String _album) {
+        titleView.setText(_title);
+        albumArtView.setText(_artist + " | " + _album);
+    }
+
+    public void setImageBackground(int _albumID) {
+        albumArtNowPlaying.setImageBitmap(getRefelection(SongManager.getAlbumArt(PlayingNow.this, _albumID)));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if(playIntent==null){
+        if (playIntent == null) {
             playIntent = new Intent(this, BackgroundMusicServices.class);
             bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
             startService(playIntent);
@@ -137,22 +187,28 @@ public class PlayingNow extends ActionBarActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        handler.post(updateTextRunnable);
+    }
+
+    @Override
     protected void onDestroy() {
         stopService(playIntent);
-        musicSrv=null;
+        musicSrv = null;
         super.onDestroy();
     }
 
     //connect to the service
-    private ServiceConnection musicConnection = new ServiceConnection(){
+    private ServiceConnection musicConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            BackgroundMusicServices.MusicBinder binder = (BackgroundMusicServices.MusicBinder)service;
+            BackgroundMusicServices.MusicBinder binder = (BackgroundMusicServices.MusicBinder) service;
             //get service
             musicSrv = binder.getService();
             //pass list
-            musicSrv.setIncommingData(receivedList,songPosition);
+            musicSrv.setIncommingData(receivedList, songPosition);
             musicBound = true;
             musicSrv.setSong(songPosition);
             musicSrv.playSong();

@@ -3,11 +3,11 @@
     android:id="@+id/DrawerLayout_PlayNow"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:elevation="7dp">
+    android:elevation="7dp"
+    android:theme="@style/Theme.AppCompat.NoActionBar">
 
     <!-- The main content view -->
-    <FrameLayout
-        xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    <FrameLayout xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,13 +15,17 @@
 
         <include
             android:id="@+id/tool_bar"
-            layout="@layout/mytoolbar" />
+            layout="@layout/mytoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top" />
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
             android:background="@color/accent_material_light"
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -29,29 +33,21 @@
             android:paddingTop="@dimen/activity_vertical_margin"
             tools:context="com.abhi8569.musicplayer.PlayingNow">
 
-            <TextView
-                android:id="@+id/songName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="1dip"
-                android:maxLines="1"
-                android:text="We Will Rock You"
-                android:textColor="#ffffff"
-                android:textSize="30sp" />
+            <!--<me.grantland.widget.AutofitLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
 
-            <TextView
-                android:id="@+id/artistAlbumName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/songName"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="-20dip"
-                android:maxLines="1"
-                android:text="Queen | Champion"
-                android:textColor="#ffffff"
-                android:textSize="15sp" />
+                <!--<TextView-->
+                    <!--android:id="@+id/songName"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentTop="true"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:text="We Will Rock You"-->
+                    <!--android:textColor="#ffffff"-->
+                    <!--android:textSize="30sp" />-->
+            <!--</me.grantland.widget.AutofitLayout>-->
 
             <ImageButton
                 android:id="@+id/shuffleTrackButton"
@@ -95,8 +91,33 @@
                 app:circle_y_radius="150"
                 app:end_angle="20"
                 app:pointer_color="#ffffff"
-                app:start_angle="160" />
+                app:start_angle="160"
+                android:layout_marginBottom="-40dp" />
 
+
+            <me.grantland.widget.AutofitTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/songName"
+                android:textSize="30sp"
+                android:layout_centerHorizontal="true"
+                android:textColor="#ffffff"
+                android:singleLine="true"
+                android:gravity="center_horizontal"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/artistAlbumName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/albumArtNowPlaying"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-35dp"
+                android:maxLines="1"
+                android:textAlignment="center"
+                android:text="------fdsfdf"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -147,12 +168,12 @@
     <ListView
         android:id="@+id/playnow_queuelist"
         android:layout_width="280dp"
-        android:dividerHeight="2dip"
         android:layout_height="match_parent"
         android:layout_gravity="right|top"
         android:layout_marginTop="?android:attr/actionBarSize"
         android:background="@color/accent_material_light"
         android:choiceMode="singleChoice"
+        android:dividerHeight="2dip"
         android:elevation="10dp" />
 
 
